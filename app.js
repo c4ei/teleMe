@@ -9,6 +9,21 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+const dayjs = require('dayjs');
+const request = require('request');
+  const 
+  botKey = "my bot token",
+  clientId = "my client id",
+  day = dayjs().format('YYYY년 MM월 DD일 HH시 mm분 ss초'),
+  res_ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+  error_text = "[teleMe] [ERROR] "+ res_ip + "에서 "+ day + "에 해당 오류가 발생하였습니다. \n\n" + res.locals.message;
+    request(`https://api.telegram.org/bot${botKey}/sendmessage?chat_id=${clientId}&text=${encodeURI(error_text)}`, 
+      function (error, response, body) { 
+        if(!error){
+          if(response.statusCode === 200){ console.log("에러 전송 성공") }
+            } else { console.error("요청 전송을 실패하였습니다.") }
+        });
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
